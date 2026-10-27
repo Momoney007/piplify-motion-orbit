@@ -33,6 +33,7 @@ export function Intro({ onDone }: { onDone: () => void }) {
       }, 1300);
       return () => clearTimeout(t);
     }
+    return undefined;
   }, [phase, onDone]);
 
   if (phase === "gone") return null;
