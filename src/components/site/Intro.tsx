@@ -50,8 +50,8 @@ export function Intro({ onDone }: { onDone: () => void }) {
         >
           <div className="absolute inset-0 grid-lines opacity-60" />
           <div
-            className="absolute left-1/2 w-[min(70vw,520px)]"
-            style={{ top: s === "top" ? "100%" : "0", transform: `translate(-50%, ${s === "top" ? "-50%" : "-50%"})` }}
+            className="absolute inset-x-0 mx-auto w-[min(70vw,520px)]"
+            style={{ top: s === "top" ? "100%" : "0", transform: "translateY(-50%)" }}
           >
             <img
               src={mark.url}
