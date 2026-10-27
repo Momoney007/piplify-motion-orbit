@@ -56,7 +56,7 @@ function Index() {
       <div className="fixed left-0 top-0 z-[70] h-[2px] bg-ink" style={{ width: `${(scroll / Math.max(1, (typeof document !== "undefined" ? document.body.scrollHeight : 1) - (typeof window !== "undefined" ? innerHeight : 0))) * 100}%` }} />
 
       {/* NAV */}
-      <header className="fixed inset-x-0 top-0 z-50 mix-blend-normal">
+      <header className="fixed inset-x-0 top-0 z-50 border-b bg-paper/80 backdrop-blur-xl">
         <div className="mx-auto flex h-20 items-center justify-between px-6 md:px-12">
           <a href="#top" className="flex items-center gap-3">
             <img src={mark.url} alt="BIA Consulting" className="h-7 w-auto" />
