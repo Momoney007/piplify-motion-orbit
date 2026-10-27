@@ -72,7 +72,7 @@ export function Intro({ onDone }: { onDone: () => void }) {
       {/* HUD */}
       <div className="pointer-events-none absolute inset-0 flex flex-col justify-between p-6 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground md:p-10" style={{ opacity: open ? 0 : 1, transition: "opacity .4s" }}>
         <div className="flex justify-between">
-          <span>BIA / Outbound Systems</span>
+          <span>BIA Consulting / Sales Growth</span>
           <span>Houston, TX — 29.76°N 95.36°W</span>
         </div>
         <div className="flex items-end justify-between">
