@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import mark from "@/assets/bia-full.png.asset.json";
 
 // Logo "unlock" intro: logo draws in, a counter loads, then the screen splits open.
 export function Intro({ onDone }: { onDone: () => void }) {
@@ -55,7 +54,9 @@ export function Intro({ onDone }: { onDone: () => void }) {
             style={{ top: s === "top" ? "100%" : "0", transform: "translateY(-50%)" }}
           >
             <img
-              src={mark.url}
+              src="/assets/bia-consulting-full.png"
+              width={530}
+              height={355}
               alt="BIA Consulting"
               className="w-full select-none"
               draggable={false}

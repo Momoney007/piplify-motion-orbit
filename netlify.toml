@@ -1,0 +1,9 @@
+[build]
+command = "bun run build"
+publish = "dist/client"
+
+[functions]
+directory = "netlify/functions"
+
+# Nitro's Netlify preset generates the SSR function in
+# .netlify/functions-internal, which Netlify includes automatically.

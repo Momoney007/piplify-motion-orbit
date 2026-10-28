@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { Intro } from "@/components/site/Intro";
 import { Counter, Cursor, Lines, Magnetic, Reveal } from "@/components/site/motion";
-import mark from "@/assets/bia-mark.png.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -71,7 +70,7 @@ function Index() {
       <header className="fixed inset-x-0 top-0 z-50 border-b bg-paper/80 backdrop-blur-xl">
         <div className="mx-auto flex h-20 items-center justify-between px-6 md:px-12">
           <a href="#top" className="flex items-center gap-3">
-            <img src={mark.url} alt="BIA Consulting" className="h-7 w-auto" />
+            <img src="/assets/bia-consulting-mark.png" alt="BIA Consulting" width={480} height={200} className="h-7 w-auto max-w-[34vw] object-contain" />
             <span className="hidden font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground sm:inline">Consulting</span>
           </a>
           <nav className="hidden items-center gap-8 font-mono text-[11px] uppercase tracking-[0.2em] md:flex">
@@ -306,7 +305,7 @@ function Index() {
       </section>
 
       <footer className="flex flex-wrap items-center justify-between gap-4 border-t px-6 py-8 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground md:px-12">
-        <img src={mark.url} alt="BIA Consulting" className="h-5 w-auto" />
+        <img src="/assets/bia-consulting-mark.png" alt="BIA Consulting" width={480} height={200} className="h-5 w-auto max-w-full object-contain" />
         <span>Building better businesses.</span>
         <a href={LINKEDIN} target="_blank" rel="noreferrer" className="transition-colors hover:text-ink">LinkedIn ↗</a>
         <span>© {new Date().getFullYear()} BIA Consulting</span>
