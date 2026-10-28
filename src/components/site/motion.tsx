@@ -6,6 +6,13 @@ export function useInView<T extends Element>(threshold = 0.2) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (
+      !("IntersectionObserver" in window) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setInView(true);
+      return;
+    }
     const io = new IntersectionObserver(
       ([e]) => {
         if (e?.isIntersecting) {
@@ -21,16 +28,36 @@ export function useInView<T extends Element>(threshold = 0.2) {
   return { ref, inView };
 }
 
-export function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
+export function Reveal({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+}) {
   const { ref, inView } = useInView<HTMLDivElement>(0.15);
   return (
-    <div ref={ref} className={`reveal ${inView ? "in" : ""} ${className}`} style={{ transitionDelay: `${delay}ms` }}>
+    <div
+      ref={ref}
+      className={`reveal ${inView ? "in" : ""} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
       {children}
     </div>
   );
 }
 
-export function Lines({ lines, className = "", delay = 0 }: { lines: ReactNode[]; className?: string; delay?: number }) {
+export function Lines({
+  lines,
+  className = "",
+  delay = 0,
+}: {
+  lines: ReactNode[];
+  className?: string;
+  delay?: number;
+}) {
   const { ref, inView } = useInView<HTMLDivElement>(0.2);
   return (
     <div ref={ref} className={className}>
@@ -43,7 +70,17 @@ export function Lines({ lines, className = "", delay = 0 }: { lines: ReactNode[]
   );
 }
 
-export function Counter({ to, prefix = "", suffix = "", duration = 1800 }: { to: number; prefix?: string; suffix?: string; duration?: number }) {
+export function Counter({
+  to,
+  prefix = "",
+  suffix = "",
+  duration = 1800,
+}: {
+  to: number;
+  prefix?: string;
+  suffix?: string;
+  duration?: number;
+}) {
   const { ref, inView } = useInView<HTMLSpanElement>(0.4);
   const [v, setV] = useState(0);
   useEffect(() => {
@@ -67,7 +104,15 @@ export function Counter({ to, prefix = "", suffix = "", duration = 1800 }: { to:
   );
 }
 
-export function Magnetic({ children, className = "", href }: { children: ReactNode; className?: string; href: string }) {
+export function Magnetic({
+  children,
+  className = "",
+  href,
+}: {
+  children: ReactNode;
+  className?: string;
+  href: string;
+}) {
   const ref = useRef<HTMLAnchorElement>(null);
   return (
     <a
@@ -76,6 +121,7 @@ export function Magnetic({ children, className = "", href }: { children: ReactNo
       data-cursor="hover"
       className={className}
       onMouseMove={(e) => {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         const r = ref.current!.getBoundingClientRect();
         const x = e.clientX - r.left - r.width / 2;
         const y = e.clientY - r.top - r.height / 2;
@@ -93,26 +139,48 @@ export function Cursor() {
   const dot = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (!window.matchMedia("(pointer: fine)").matches) return;
-    let x = innerWidth / 2, y = innerHeight / 2, rx = x, ry = y, big = false, raf = 0;
+    if (
+      !window.matchMedia("(pointer: fine)").matches ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
+      return;
+    let x = innerWidth / 2,
+      y = innerHeight / 2,
+      rx = x,
+      ry = y,
+      big = false,
+      raf = 0;
     const move = (e: MouseEvent) => {
-      x = e.clientX; y = e.clientY;
+      x = e.clientX;
+      y = e.clientY;
       big = !!(e.target as HTMLElement).closest("a,button,[data-cursor]");
     };
     const loop = () => {
-      rx += (x - rx) * 0.15; ry += (y - ry) * 0.15;
-      if (dot.current) dot.current.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%)`;
-      if (ring.current) ring.current.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%) scale(${big ? 2.2 : 1})`;
+      rx += (x - rx) * 0.15;
+      ry += (y - ry) * 0.15;
+      if (dot.current)
+        dot.current.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%)`;
+      if (ring.current)
+        ring.current.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%) scale(${big ? 2.2 : 1})`;
       raf = requestAnimationFrame(loop);
     };
     addEventListener("mousemove", move);
     raf = requestAnimationFrame(loop);
-    return () => { removeEventListener("mousemove", move); cancelAnimationFrame(raf); };
+    return () => {
+      removeEventListener("mousemove", move);
+      cancelAnimationFrame(raf);
+    };
   }, []);
   return (
     <>
-      <div ref={dot} className="pointer-events-none fixed left-0 top-0 z-[80] hidden h-1.5 w-1.5 bg-ink [@media(pointer:fine)]:block" />
-      <div ref={ring} className="pointer-events-none fixed left-0 top-0 z-[80] hidden h-9 w-9 rounded-full border border-ink/60 mix-blend-difference transition-[width,height] duration-300 [@media(pointer:fine)]:block" />
+      <div
+        ref={dot}
+        className="custom-cursor pointer-events-none fixed left-0 top-0 z-[80] hidden h-1.5 w-1.5 bg-ink [@media(pointer:fine)]:block"
+      />
+      <div
+        ref={ring}
+        className="custom-cursor pointer-events-none fixed left-0 top-0 z-[80] hidden h-9 w-9 rounded-full border border-ink/60 mix-blend-difference transition-[width,height] duration-300 [@media(pointer:fine)]:block"
+      />
     </>
   );
 }

@@ -6,6 +6,11 @@ export function Intro({ onDone }: { onDone: () => void }) {
   const [phase, setPhase] = useState<"load" | "lock" | "open" | "gone">("load");
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setPhase("gone");
+      onDone();
+      return;
+    }
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     let raf = 0;
@@ -21,7 +26,7 @@ export function Intro({ onDone }: { onDone: () => void }) {
       cancelAnimationFrame(raf);
       document.body.style.overflow = previousOverflow;
     };
-  }, []);
+  }, [onDone]);
 
   useEffect(() => {
     if (phase === "lock") {
@@ -45,9 +50,20 @@ export function Intro({ onDone }: { onDone: () => void }) {
 
   return (
     <div
-      className="fixed inset-0 z-[90] cursor-pointer"
+      className="site-intro fixed inset-0 z-[90] cursor-pointer"
+      aria-label="Welcome to BIA Consulting"
       onClick={() => phase === "lock" && setPhase("open")}
     >
+      <button
+        type="button"
+        onClick={(event) => {
+          event.stopPropagation();
+          setPhase("open");
+        }}
+        className="absolute bottom-24 left-1/2 z-10 -translate-x-1/2 rounded-full border border-ink/30 bg-paper px-6 py-3 font-mono text-xs uppercase tracking-widest text-ink"
+      >
+        Skip intro →
+      </button>
       {/* two shutters */}
       {(["top", "bottom"] as const).map((s) => (
         <div
