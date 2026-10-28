@@ -108,6 +108,9 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <noscript>
+          <style>{`.site-intro { display: none !important; } .reveal { opacity: 1 !important; transform: none !important; } .mask-line > span { transform: none !important; } .cursor-none-fine, .cursor-none-fine * { cursor: auto !important; }`}</style>
+        </noscript>
         {children}
         <Scripts />
       </body>
