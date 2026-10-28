@@ -18,8 +18,9 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const BOOK = "#book";
+const BOOK = "https://calendly.com/mominyabbas2/30min";
 const LINKEDIN = "https://www.linkedin.com/company/144044597/";
+const EMAIL = "documatesolution@gmail.com";
 
 const services = [
   { n: "Fractional reps", d: "We place SDRs, BDRs and AEs inside your business — trained, managed and producing from week one. No 90-day ramp, no recruiting fees.", tag: "SDR · BDR · AE" },
@@ -296,9 +297,10 @@ function Index() {
           <Reveal delay={300} className="mt-12 flex flex-col items-center gap-6">
             <p className="max-w-md text-muted-foreground">One 30-minute call. We'll look at your team, your pipeline and your market — and tell you honestly where the revenue is hiding.</p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Magnetic href="mailto:hello@biaconsulting.com" className="rounded-full bg-ink px-10 py-5 font-mono text-xs uppercase tracking-[0.25em] text-paper">Book your strategy call →</Magnetic>
+              <Magnetic href={BOOK} className="rounded-full bg-ink px-10 py-5 font-mono text-xs uppercase tracking-[0.25em] text-paper">Book your strategy call →</Magnetic>
               <Magnetic href={LINKEDIN} className="rounded-full border border-ink px-10 py-5 font-mono text-xs uppercase tracking-[0.25em] text-ink">Follow on LinkedIn ↗</Magnetic>
             </div>
+            <a href={`mailto:${EMAIL}`} className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-ink">or email {EMAIL}</a>
           </Reveal>
         </div>
       </section>
